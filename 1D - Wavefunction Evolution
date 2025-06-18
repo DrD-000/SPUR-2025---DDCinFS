@@ -1,0 +1,58 @@
+
+import numpy as np
+from numpy.linalg import eig
+import matplotlib.pyplot as plt
+rng=np.random.default_rng()
+
+a=1
+n=200
+m=5
+
+H=np.random.rand(n,n)
+for i in range(n):
+    for j in range (n):
+        if j==i:
+            H[i][j]=2*a+m*rng.random()
+        elif j==i+1:
+            H[i][j]=-a
+        elif j==i-1:
+            H[i][j]=-a
+        else:
+            H[i][j]=0
+H[0][n-1]=-a
+H[n-1][0]=-a
+H=H.astype(complex)
+
+E,v=eig(H)
+N=list(range(n))
+V=np.transpose(v)
+p=np.zeros(n)
+p[99]=1
+p=p.astype(complex)
+c=np.linalg.solve(v,p)
+C=np.reshape(c,(n,))
+t=np.arange(5,51,5)
+fig, R=plt.subplots()
+
+for k in t:
+    q=np.random.rand(n,n)
+    q=q.astype(complex)
+
+    for i in range(n):
+        for j in range (n):
+            q[i,j]=C[i]*(np.exp(-E[i]*1j*k))*V[i,j]
+    q=np.transpose(q)
+
+    Q=np.random.rand(n)
+    Q=Q.astype(complex)
+
+    for i in range(n):
+        Q[i]=np.sum(q[i])
+
+    P=abs(Q)**2
+    
+    R.plot(N,P,label="t="+str(k))
+
+plt.title("n="+str(n)+" m="+str(m))
+plt.legend()
+plt.show()
