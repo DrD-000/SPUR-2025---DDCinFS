@@ -1,4 +1,4 @@
-
+"Using the eigenfunctions of the Hamiltonian to model a given wavefunction"
 import numpy as np
 from numpy.linalg import eig
 import matplotlib.pyplot as plt
