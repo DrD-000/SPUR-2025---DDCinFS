@@ -99,7 +99,7 @@ for w in range(m.size):
 
     L_avg = np.random.rand(t.size)
     for k in range(t.size):
-        L_avg[k] = np.sum(np.transpose(L)[k])
+        L_avg[k] = np.sum(np.transpose(L)[k])/K
 
     R.plot(t, L_avg, label='m='+str(m[w]))
 # Labeling plot
